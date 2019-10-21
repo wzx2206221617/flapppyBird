@@ -3,6 +3,8 @@ import { DataStore } from "./js/base/DataStore.js";
 import { Background } from "./js/runtime/Background.js";
 import { Land } from "./js/runtime/Land.js";
 import { Director } from "./js/Director.js";
+import { UpPipe } from "./js/runtime/UpPipe.js";
+import { Birds } from "./js/player/Birds.js";
 
 // 程序的主类，用于小游戏过程中数据的初始化，以及点击事件的绑定
 
@@ -10,7 +12,8 @@ export class Main{
     constructor(){
         console.log('游戏开始了');
         // 初始化画布
-        this.canvas = document.getElementById('game');
+        // this.canvas = document.getElementById('game');
+        this.canvas=wx.createCanvas('game');
         this.ctx = this.canvas.getContext('2d');
         // 初始化变量池
         this.loader = new ResourceLoader();
@@ -43,8 +46,12 @@ export class Main{
         // new Background().draw()
         // new Land().draw()
         this.dataStore.set('background',new Background())
-                      .set('land',new Land());
-
+                      .set('land',new Land())
+                      .set('pipes',[])
+                      .set('birds',new Birds())
+        //先创建一组水管
+        this.director.createPipes();
+        
         // 开始运行
         this.director.run();
     }
