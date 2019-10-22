@@ -12,8 +12,8 @@ export class Main{
     constructor(){
         console.log('游戏开始了');
         // 初始化画布
-        // this.canvas = document.getElementById('game');
-        this.canvas=wx.createCanvas('game');
+        this.canvas = document.getElementById('game');
+        // this.canvas=wx.createCanvas('game');
         this.ctx = this.canvas.getContext('2d');
         // 初始化变量池
         this.loader = new ResourceLoader();
