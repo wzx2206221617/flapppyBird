@@ -1,7 +1,8 @@
 import { DataStore } from "./base/DataStore.js";
 import { UpPipe } from "./runtime/UpPipe.js";
 import { DownPipe } from "./runtime/DownPipe.js";
-import{Land} from"./runtime/Land.js"
+import{Land} from"./runtime/Land.js";
+import{Tool} from"../extra.js";
 
 // 导演类，控制游戏的主流程，逻辑
 
@@ -131,12 +132,22 @@ export class Director{
         requestAnimationFrame(()=>this.run());
         }
         else{
-        //游戏结束
+          let t=new Tool();
+          t.zhendong();
+          t.voice('./audio/boom.mp3', true).play();
+        //游戏结束,
         cancelAnimationFrame(this.id);
+        //避免
+        this.dataStore.get('background').draw();
+        this.dataStore.get('pipes').forEach(p=>{p.draw()});
+          this.dataStore.get('land').draw();
+          this.dataStore.get('birds').draw();
+          this.dataStore.get('score').draw();
         //画结束的按钮
         this.dataStore.get('startButton').draw();
         //销毁数据
         this.dataStore.destroy();
+        
         }
          
     }
